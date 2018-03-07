@@ -104,7 +104,7 @@ const menuData = [{
   path: 'user',
   authority: 'guest',
   children: [{
-    name: '登录',
+    name: '凹凸壁纸管理后台',
     path: 'login',
   }, {
     name: '注册',

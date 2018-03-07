@@ -14,6 +14,7 @@ const modelNotExisted = (app, model) => (
 
 // wrapper of dynamic
 const dynamicWrapper = (app, models, component) => {
+  // console.log('route', app.toString(), models.toString(), component.toString());
   // () => require('module')
   // transformed by babel-plugin-dynamic-import-node-sync
   if (component.toString().indexOf('.then(') < 0) {

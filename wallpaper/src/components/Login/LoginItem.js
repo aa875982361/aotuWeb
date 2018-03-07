@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button, Row, Col } from 'antd';
+import { Form, Row, Col } from 'antd';
 import omit from 'omit.js';
-import styles from './index.less';
 import map from './map';
 
 const FormItem = Form.Item;
@@ -18,36 +17,19 @@ function generator({ defaultProps, defaultRules, type }) {
         super(props);
         this.state = {
           count: 0,
+          imgUrl: 'http://wallpaper-cms.t.talkmoney.cn/api/picCaptcha/getPicCaptcha?uuid=',
         };
       }
       componentDidMount() {
-        if (this.context.updateActive) {
-          this.context.updateActive(this.props.name);
-        }
       }
       componentWillUnmount() {
-        clearInterval(this.interval);
-      }
-      onGetCaptcha = () => {
-        let count = 59;
-        this.setState({ count });
-        if (this.props.onGetCaptcha) {
-          this.props.onGetCaptcha();
-        }
-        this.interval = setInterval(() => {
-          count -= 1;
-          this.setState({ count });
-          if (count === 0) {
-            clearInterval(this.interval);
-          }
-        }, 1000);
       }
       render() {
         const { getFieldDecorator } = this.context.form;
         const options = {};
         let otherProps = {};
-        const { onChange, defaultValue, rules, name, ...restProps } = this.props;
-        const { count } = this.state;
+        const { onChange, defaultValue, onGetCaptcha, rules, name, ...restProps } = this.props;
+        const { imgUrl } = this.state;
         options.rules = rules || defaultRules;
         if (onChange) {
           options.onChange = onChange;
@@ -67,14 +49,7 @@ function generator({ defaultProps, defaultRules, type }) {
                   )}
                 </Col>
                 <Col span={8}>
-                  <Button
-                    disabled={count}
-                    className={styles.getCaptcha}
-                    size="large"
-                    onClick={this.onGetCaptcha}
-                  >
-                    {count ? `${count} s` : '获取验证码'}
-                  </Button>
+                  <img alt="验证码" src={imgUrl + this.props.uuid} onClick={onGetCaptcha} />
                 </Col>
               </Row>
             </FormItem>
