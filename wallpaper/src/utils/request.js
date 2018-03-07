@@ -2,16 +2,17 @@ import fetch from 'dva/fetch';
 import { notification } from 'antd';
 import { routerRedux } from 'dva/router';
 import store from '../index';
+import { getToken } from './authority';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
   202: '一个请求已经进入后台排队（异步任务）。',
   204: '删除数据成功。',
-  400: '发出的请求有错误，服务器没有进行新建或修改数据的操作。',
+  400: '验证码错误',
   401: '用户没有权限（令牌、用户名、密码错误）。',
   403: '用户得到授权，但是访问是被禁止的。',
-  404: '发出的请求针对的是不存在的记录，服务器没有进行操作。',
+  404: '验证码错误',
   406: '请求的格式不可得。',
   410: '请求的资源被永久删除，且不会再得到的。',
   422: '当创建一个对象时，发生一个验证错误。',
@@ -21,13 +22,15 @@ const codeMessage = {
   504: '网关超时。',
 };
 function checkStatus(response) {
+  console.log('checkStatus', response.toString());
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
   const errortext = codeMessage[response.status] || response.statusText;
+  console.log('checkStatus', JSON.stringify(errortext), response.status, response);
   notification.error({
-    message: `请求错误 ${response.status}: ${response.url}`,
-    description: errortext,
+    message: `请求错误 ${response.status}: ${errortext}`,
+    description: '',
   });
   const error = new Error(errortext);
   error.name = response.status;
@@ -48,6 +51,12 @@ export default function request(url, options) {
   };
   const newOptions = { ...defaultOptions, ...options };
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
+    if (getToken()) {
+      newOptions.headers = {
+        Authorization: 'token '.concat(getToken()),
+        ...newOptions.headers,
+      };
+    }
     if (!(newOptions.body instanceof FormData)) {
       newOptions.headers = {
         Accept: 'application/json',
