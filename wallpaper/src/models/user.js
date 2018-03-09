@@ -1,4 +1,4 @@
-import { query as queryUsers, queryCurrent } from '../services/user';
+import { query as queryUsers } from '../services/user';
 
 export default {
   namespace: 'user',
@@ -16,8 +16,14 @@ export default {
         payload: response,
       });
     },
-    *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
+    *fetchCurrent(_, { put }) {
+      // const response = yield call(queryCurrent);
+      const response = {
+        name: 'Serati Ma',
+        avatar: 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png',
+        userid: '00000001',
+        notifyCount: 12,
+      };
       yield put({
         type: 'saveCurrentUser',
         payload: response,

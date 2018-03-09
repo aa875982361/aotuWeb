@@ -15,7 +15,6 @@ import './index.less';
 const app = dva({
   history: createHistory(),
 });
-
 // 2. Plugins
 app.use(createLoading());
 

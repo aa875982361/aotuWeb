@@ -20,18 +20,24 @@ export default {
           type: 'changeLoginStatus',
           payload: response,
         });
-        // console.log('login/login', response.state, JSON.stringify(response));
-        // Login successfully
-        if (response.status === 'ok') {
+        console.log('login', 'd');
+        if (response !== undefined) {
+          console.log('login', response.status);
+        }
+        // response 有可能是undefined 出现错误的情况 是没有返回结果的 没有返回结果就undefined 所以要加一个判断
+        if (response !== undefined && response.token !== undefined) {
+          console.log('login', 'e');
+          reloadAuthorized();
           yield put(routerRedux.push('/'));
         }
-      } finally {
+      } catch (e) {
         yield put({
           type: 'changeLoginStatus',
           payload: {
             state: 'error',
           },
         });
+        reloadAuthorized();
         yield put(routerRedux.push('/'));
       }
     },
@@ -59,6 +65,13 @@ export default {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
+      if (payload === undefined) {
+        return {
+          ...state,
+          status: 'error',
+          type: 'account',
+        };
+      }
       if (payload.token) {
         setToken(payload.token);
       }

@@ -1,6 +1,30 @@
 import { isUrl } from '../utils/utils';
 
 const menuData = [{
+  name: '权限管理',
+  icon: 'book',
+  path: 'admin',
+}, {
+  name: '刘海模版系列管理',
+  icon: 'book',
+  path: 'liuhaiSeries',
+}, {
+  name: '刘海模板管理',
+  icon: 'book',
+  path: 'liuhai',
+}, {
+  name: '系统壁纸系列管理',
+  icon: 'book',
+  path: 'wallpaperSeries',
+}, {
+  name: '系统壁纸管理',
+  icon: 'book',
+  path: 'wallpaper',
+}, {
+  name: '留言管理',
+  icon: 'book',
+  path: 'feedback',
+}, {
   name: 'dashboard',
   icon: 'dashboard',
   path: 'dashboard',
@@ -13,6 +37,10 @@ const menuData = [{
   }, {
     name: '工作台',
     path: 'workplace',
+    // hideInMenu: true,
+  }, {
+    name: '测试页',
+    path: 'test',
     // hideInMenu: true,
   }],
 }, {
