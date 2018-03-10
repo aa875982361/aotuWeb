@@ -6,8 +6,9 @@ import { connect } from 'dva';
 // import { MyTable } from './Table';
 
 import styles from './Test.less';
-import Dialog from './Share/Dialog';
+import Dialog from '../components/Dialog/Dialog';
 
+// 本地测试数据
 const dataSource = [{
   key: '1',
   name: '胡彦斌',
@@ -164,7 +165,6 @@ export default class TableTest extends PureComponent {
 
     return (
       <div>
-        <div>pling</div>
         <div className={styles.tableListForm}>
           {this.renderSimpleForm()}
         </div>
