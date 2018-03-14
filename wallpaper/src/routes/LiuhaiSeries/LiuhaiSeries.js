@@ -5,15 +5,15 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import Dialog from '../../components/Dialog/Dialog';
 import Check from '../../components/Check/Check';
 
-import styles from './Admin.less';
+import styles from './LiuhaiSeries.less';
 
 const FormItem = Form.Item;
 
-@connect(({ admin }) => ({
-  admin,
+@connect(({ liuhaiSeries }) => ({
+  liuhaiSeries,
 }))
 @Form.create()
-export default class Admin extends Component {
+export default class LiuhaiSeries extends Component {
   // 初始化函数
   constructor(props) {
     super(props);
@@ -22,14 +22,23 @@ export default class Admin extends Component {
       payload: {},
     };
     this.props.dispatch({
-      type: 'admin/getlist',
+      type: 'liuhaiSeries/getlist',
       payload: {},
     });
     // 表格头
     this.columns = [{
-      title: '账号',
-      dataIndex: 'account',
-      key: 'account',
+      title: '刘海模板系列ID',
+      dataIndex: 'liuhaiSeriesId',
+      key: 'liuhaiSeriesId',
+    }, {
+      title: '系列名称',
+      dataIndex: 'name',
+      key: 'name',
+    }, {
+      title: '免费',
+      dataIndex: 'free',
+      key: 'free',
+      render: val => <span>{val ? '是' : '否'}</span>,
     }, {
       title: '操作',
       dataIndex: 'op',
@@ -123,7 +132,7 @@ export default class Admin extends Component {
     const { getFieldDecorator } = this.props.form;
     return (
       <Col md={8} sm={24}>
-        <FormItem label="账号">
+        <FormItem label="系列名称">
           {getFieldDecorator('checkname')(
             <Input placeholder="请输入查找的账号" />
           )}
@@ -142,10 +151,10 @@ export default class Admin extends Component {
         <FormItem
           labelCol={{ span: 5 }}
           wrapperCol={{ span: 15 }}
-          label="账号"
+          label="系列名称"
         >
-          {form.getFieldDecorator('account', {
-            rules: [{ required: true, message: '请输入账号' }],
+          {form.getFieldDecorator('name', {
+            rules: [{ required: true, message: '请输入系列名称' }],
             initialValue: payload.name || '',
           })(
             <Input placeholder="请输入" />
@@ -154,10 +163,10 @@ export default class Admin extends Component {
         <FormItem
           labelCol={{ span: 5 }}
           wrapperCol={{ span: 15 }}
-          label="密码"
+          label="免费"
         >
           {form.getFieldDecorator('password', {
-            rules: [{ required: true, message: '请输入密码' }],
+            rules: [{ required: true, message: '请选择' }],
           })(
             <Input placeholder="请输入" />
           )}
@@ -168,7 +177,7 @@ export default class Admin extends Component {
   // 主页面
   render() {
     const { dialogVisible, payload } = this.state;
-    const { admin, loading } = this.props;
+    const { liuhaiSeries, loading } = this.props;
     return (
       <PageHeaderLayout>
         <Card bordered={false}>
@@ -182,7 +191,7 @@ export default class Admin extends Component {
           </div>
           <Table
             loading={loading}
-            dataSource={admin.dataSource}
+            dataSource={liuhaiSeries.dataSource}
             columns={this.columns}
           />
         </Card>

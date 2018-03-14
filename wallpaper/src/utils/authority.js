@@ -9,9 +9,11 @@ export function setAuthority(authority) {
 }
 
 export function getToken() {
+  console.log('getToken', localStorage.getItem('token'));
   return localStorage.getItem('token') || '';
 }
 
 export function setToken(token) {
+  console.log('setToken', token);
   return localStorage.setItem('token', token);
 }

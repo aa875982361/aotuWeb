@@ -78,7 +78,10 @@ export const getRouterData = (app) => {
       component: dynamicWrapper(app, ['chart'], () => import('../routes/Dashboard/Analysis')),
     },
     '/admin': {
-      component: dynamicWrapper(app, ['list'], () => import('../routes/Admin/Admin')),
+      component: dynamicWrapper(app, ['admin'], () => import('../routes/Admin/Admin')),
+    },
+    '/liuhaiSeries': {
+      component: dynamicWrapper(app, ['liuhaiSeries'], () => import('../routes/LiuhaiSeries/LiuhaiSeries')),
     },
     '/dashboard/monitor': {
       component: dynamicWrapper(app, ['monitor'], () => import('../routes/Dashboard/Monitor')),
