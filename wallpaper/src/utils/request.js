@@ -22,17 +22,20 @@ const codeMessage = {
   504: '网关超时。',
 };
 function checkStatus(response) {
-  console.log('checkStatus', response.toString());
+  let errortext;
+  console.log('checkStatus', response);
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
-  const errortext = codeMessage[response.status] || response.statusText;
-  console.log('checkStatus', JSON.stringify(errortext), response.status, response);
-  notification.error({
-    message: `请求错误 ${response.status}: ${errortext}`,
-    description: '',
+  errortext = codeMessage[response.status] || response.statusText;
+  response.json().then((value) => {
+    errortext = value.msg || errortext;
+    notification.error({
+      message: `请求错误 ${response.status}: ${errortext}`,
+      description: '',
+    });
   });
-  const error = new Error(errortext);
+  const error = new Error(errortext.toString());
   error.name = response.status;
   error.response = response;
   throw error;
@@ -47,16 +50,17 @@ function checkStatus(response) {
  */
 export default function request(url, options) {
   const defaultOptions = {
-    credentials: 'include',
+    // credentials: 'include',
   };
   const newOptions = { ...defaultOptions, ...options };
+  const token = getToken();
+  if (token) {
+    newOptions.headers = {
+      Authorization: 'token '.concat(token),
+      ...newOptions.headers,
+    };
+  }
   if (newOptions.method === 'POST' || newOptions.method === 'PUT') {
-    if (getToken()) {
-      newOptions.headers = {
-        Authorization: 'token '.concat(getToken()),
-        ...newOptions.headers,
-      };
-    }
     if (!(newOptions.body instanceof FormData)) {
       newOptions.headers = {
         Accept: 'application/json',

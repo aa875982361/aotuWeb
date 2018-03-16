@@ -1,4 +1,4 @@
-import { routerRedux } from 'dva/router';
+
 import { getAdminList, addManagerApi } from '../services/api';
 
 export default {

@@ -83,6 +83,12 @@ export const getRouterData = (app) => {
     '/liuhaiSeries': {
       component: dynamicWrapper(app, ['liuhaiSeries'], () => import('../routes/LiuhaiSeries/LiuhaiSeries')),
     },
+    '/liuhai': {
+      component: dynamicWrapper(app, ['liuhai'], () => import('../routes/Liuhai/Liuhai')),
+    },
+    '/wallpaperSeries': {
+      component: dynamicWrapper(app, ['liuhaiSeries'], () => import('../routes/WallpaperSeries/WallpaperSeries')),
+    },
     '/dashboard/monitor': {
       component: dynamicWrapper(app, ['monitor'], () => import('../routes/Dashboard/Monitor')),
     },

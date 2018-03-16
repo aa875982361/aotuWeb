@@ -56,7 +56,7 @@ export default {
       };
     },
     addList(state, { payload }) {
-      console.log('admin/addList', state, payload);
+      console.log('liuhaiSeries/addList', state, payload);
       if (payload === undefined) {
         return {
           ...state,
